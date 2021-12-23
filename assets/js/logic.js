@@ -1,30 +1,22 @@
-//✅current date is displayed at the top of the calendar
-
-//✅page contains time blocks for hours 9 am - 5 pm
-
-//✅time blocks are color coded to show whether they are in the past, present, or future
-
-//✅click a time block allows me to enter an event & click save button saves the event
-//*** i set it to save whenever it is clicked off of... find a way to fix this
-
-//save button saves content to local storage
-
-//refresh the page, tasks persist bc they load from local storage
-
 var dateDisplay = document.querySelector("#currentDay");
 var currentDay = moment();
-
 dateDisplay.textContent = currentDay.format("MMMM DD, YYYY");
 
+var hours = [{ hour: "9 am", event: "", hourID: 9 }, { hour: "10 am", event: " ", hourID: 10 }, { hour: "11 am", event: "", hourID: 11 }, { hour: "12 pm", event: " ", hourID: 12 }, { hour: "1 pm", event: " ", hourID: 13 }, { hour: "2 pm", event: " ", hourID: 14 }, { hour: "3 pm", event: " ", hourID: 15 }, { hour: "4 pm", event: " ", hourID: 16 }, { hour: "5 pm", event: " ", hourID: 17 }];
 
 var timeBlockEl = document.createElement("div");
 timeBlockEl.classList = "time-block";
 var timeBlockContainerEl = document.querySelector("#timeBlockContainer");
 timeBlockContainerEl.appendChild(timeBlockEl);
 
-var hours = [{ hour: "9 am", event: "this is the event at 9", hourID: 9 }, { hour: "10 am", event: " ", hourID: 10 }, { hour: "11 am", event: "this is the event at 11", hourID: 11 }, { hour: "12 pm", event: " ", hourID: 12 }, { hour: "1 pm", event: " ", hourID: 1 }, { hour: "2 pm", event: " ", hourID: 2 }, { hour: "3 pm", event: " ", hourID: 3 }, { hour: "4 pm", event: " ", hourID: 4 }, { hour: "5 pm", event: " ", hourID: 5 }];
+var loadEvents = function () {
+    hours = JSON.parse(localStorage.getItem("events"));
+
+}
 
 var createSchedule = function (arr) {
+    loadEvents();
+
     for (var i = 0; i < hours.length; i++) {
         var timeRowEl = document.createElement("div");
         timeRowEl.classList = "row justify-content-center";
@@ -59,7 +51,6 @@ var createSchedule = function (arr) {
     };
 };
 
-createSchedule(hours);
 
 $(timeBlockEl).on('click', '.event', function () {
     // get current text of p element
@@ -68,24 +59,42 @@ $(timeBlockEl).on('click', '.event', function () {
         .trim();
     console.log(text);
     // replace p element with a new textarea
-    var textInput = $("<textarea>").val(text).addClass("col-8");
-    $(this).replaceWith(textInput);
-    textInput.trigger("focus");
-});
-
-$(timeBlockEl).on('blur', 'textarea', function () {
-    console.log("clicked away from text area!");
-    //get current value of text area
-    var text = $(this).val();
-    console.log(text);
-
+    var textInput = $("<textarea>").val(text).addClass("event col-8");
     //get index for this specific event
     var index = $(this).closest('.row').index();
     console.log(index);
 
+    $(this).replaceWith(textInput);
+
+    var currentHour = moment().hours();
+    if (moment(hours[index].hourID).isSame(currentHour)) {
+        textInput.addClass("event col-8 present")
+    }
+    else if (moment(hours[index].hourID).isBefore(currentHour)) {
+        textInput.addClass("event col-8 past");
+    }
+    else if (moment(hours[index].hourID).isAfter(currentHour)) {
+        textInput.addClass("event col-8 future");
+    };
+
+    textInput.trigger("focus");
+});
+
+$(timeBlockEl).on('click', '.saveBtn', function () {
+    console.log('save btn clicked!!!');
+    //get index for this specific event
+    var index = $(this).closest('.row').index();
+    console.log(index);
+
+    //get current value of text area
+    var textArea = $(this).prev();
+    var text = textArea.val();
+    console.log(textArea);
+    console.log(text);
+
     //update correct event in array
     hours[index].event = text;
-    console.log(this);
+    localStorage.setItem('events', JSON.stringify(hours));
 
     //recreate div
     var newEvent = $("<div>")
@@ -93,7 +102,7 @@ $(timeBlockEl).on('blur', 'textarea', function () {
         .text(text);
 
     //replace textarea with new div
-    $(this).replaceWith(newEvent);
+    $(textArea).replaceWith(newEvent);
     var currentHour = moment().hours();
     if (moment(hours[index].hourID).isSame(currentHour)) {
         newEvent.addClass("event col-8 present")
@@ -104,5 +113,7 @@ $(timeBlockEl).on('blur', 'textarea', function () {
     else if (moment(hours[index].hourID).isAfter(currentHour)) {
         newEvent.addClass("event col-8 future");
     };
-
 })
+
+
+createSchedule(hours);
