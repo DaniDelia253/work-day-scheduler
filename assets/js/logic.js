@@ -13,12 +13,16 @@ timeBlockContainerEl.appendChild(timeBlockEl);
 
 
 var loadEvents = function () {
-    hours = JSON.parse(localStorage.getItem("events"));
-}
+    if (localStorage.getItem("events")) {
+        var loadedEvents = localStorage.getItem("events");
+        hours = JSON.parse(loadedEvents);
+    };
+
+};
 
 var createSchedule = function (arr) {
-    loadEvents();
 
+    
     for (var i = 0; i < hours.length; i++) {
         var timeRowEl = document.createElement("div");
         timeRowEl.classList = "row justify-content-center";
@@ -117,5 +121,5 @@ $(timeBlockEl).on('click', '.saveBtn', function () {
     };
 })
 
-
+loadEvents();
 createSchedule(hours);
