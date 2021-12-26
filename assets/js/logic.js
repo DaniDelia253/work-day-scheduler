@@ -1,3 +1,4 @@
+
 var dateDisplay = document.querySelector("#currentDay");
 var currentDay = moment();
 dateDisplay.textContent = currentDay.format("MMMM DD, YYYY");
@@ -9,9 +10,10 @@ timeBlockEl.classList = "time-block";
 var timeBlockContainerEl = document.querySelector("#timeBlockContainer");
 timeBlockContainerEl.appendChild(timeBlockEl);
 
+
+
 var loadEvents = function () {
     hours = JSON.parse(localStorage.getItem("events"));
-
 }
 
 var createSchedule = function (arr) {
@@ -59,7 +61,7 @@ $(timeBlockEl).on('click', '.event', function () {
         .trim();
     console.log(text);
     // replace p element with a new textarea
-    var textInput = $("<textarea>").val(text).addClass("event col-8");
+    var textInput = $("<textarea>").val(text).addClass(" event col-8");
     //get index for this specific event
     var index = $(this).closest('.row').index();
     console.log(index);
