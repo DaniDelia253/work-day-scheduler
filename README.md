@@ -19,30 +19,13 @@ This daily Planner application can be used to organize events for your busy work
 
 ## Usage
 
-Here is what the application looks like on page load:
-![Workday Scheduler Landing Page](./assets/images/screenshot-page-load.png)
-
-* When the user clicks inside a time block, the time block becomes a starts the timer and shows the first question.
-    ![First question shown with timer ticking down from 75 secondos](./assets/images/screenshot-question.png)
-
-* When a **correct answer** is submitted, the next question is shown and a green indicator shows on the bottom of the page for 2 seconds.
-    ![Indicator for a correct response](./assets/images/screenshot-correct-answer.png)
-
-* When an **incorrect answer** is submitted, the next question is shown and a red indicator shows on the bottom of the page for 2 seconds. Additionally, 10 seconds is deducted from the time and the timer flashes red for 2 seconds.
-    ![Indicator for an incorrect response](./assets/images/screenshot-incorrect-answer.png)
-
-* When the  timer reaches 0 or all the questions are answered, the quiz is over and the Score Form page loads to show the user their score and ask fro an input of user's initials to save score.
-    ![Score Form Page](./assets/images/screenshot-score-form.png)
-
-* High scores are saved in local storage and displayed on the High Score Page.
-    ![High Score Page](./assets/images/screenshot-highscores-page.png)
-
+![App Interaction](./assets/images/README-gif.gif)
 
 ---
 
 ## Credits
 
-User Story and Mock Up provided by Trinity Education Sercice © 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
+User Story, Mock Up, snd Starter Code provided by Trinity Education Sercice © 2021 Trilogy Education Services, LLC, a 2U, Inc. brand. Confidential and Proprietary. All Rights Reserved.
 
 [Project Repository](https://github.com/DaniDelia253/code-quiz)
 
