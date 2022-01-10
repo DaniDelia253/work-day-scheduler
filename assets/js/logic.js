@@ -11,7 +11,6 @@ var timeBlockContainerEl = document.querySelector("#timeBlockContainer");
 timeBlockContainerEl.appendChild(timeBlockEl);
 
 
-
 var loadEvents = function () {
     if (localStorage.getItem("events")) {
         var loadedEvents = localStorage.getItem("events");
@@ -65,10 +64,11 @@ $(timeBlockEl).on('click', '.event', function () {
         .trim();
     console.log(text);
     // replace p element with a new textarea
-    var textInput = $("<textarea>").val(text).addClass(" event col-8");
+    textInput = $("<textarea>").val(text).addClass(" textarea col-8");
     //get index for this specific event
     var index = $(this).closest('.row').index();
     console.log(index);
+    hours[index].event = text;
 
     $(this).replaceWith(textInput);
 
@@ -85,6 +85,7 @@ $(timeBlockEl).on('click', '.event', function () {
 
     textInput.trigger("focus");
 });
+
 
 $(timeBlockEl).on('click', '.saveBtn', function () {
     console.log('save btn clicked!!!');
